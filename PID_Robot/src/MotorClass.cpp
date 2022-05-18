@@ -40,9 +40,9 @@ void MOTOR::send_pwm() {
     bool dir_ = (this->pwm_speed > 0);
     int speed_ = min(MAX_PWM, abs(this->pwm_speed));
 
-    if (this->invert) {
-        dir_ = !dir_;
-    }
+    // if (this->invert) {
+    //     dir_ = !dir_;
+    // }
 
     if (dir_)
     {
@@ -85,14 +85,18 @@ void MOTOR::set_velocity(float setpoint_rps, float dt) {
 
     long motor_pos = this->encoder->read();
 
+    if (this->invert) {
+        setpoint_rps = -setpoint_rps;
+    }
+
     long setpoint_intermediate = rps_to_period_conversion(setpoint_rps, ENCODER_TICKS_P_REV, dt);
     float setpoint_inter = rps_conversion(setpoint_intermediate, ENCODER_TICKS_P_REV, dt);
 
     this->rps = rps_conversion(motor_pos - this->prevPos, ENCODER_TICKS_P_REV, dt);
 
-    if (this->invert) {
-        this->rps = -this->rps;
-    }
+    // if (this->invert) {
+    //     this->rps = -this->rps;
+    // }
 
     this->prevPos = motor_pos;
 
@@ -115,5 +119,13 @@ void MOTOR::set_invert(bool invert) {
 }
 
 float MOTOR::get_abs_encoder_pos() {
+    if (this->invert) {
+        return -this->prevPos;
+    }
+
     return this->prevPos;
+}
+
+bool MOTOR::get_invert() {
+    return this->invert;
 }

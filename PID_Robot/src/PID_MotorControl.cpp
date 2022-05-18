@@ -1,8 +1,7 @@
 #include <Arduino.h>
-#include <Encoder.h>
 #include <PIN_MAP.cpp>
 #include <PID_MotorControl.h>
-#include <MotorClass.h>
+#include <Robot.h>
 
 elapsedMillis clock;
 
@@ -14,8 +13,9 @@ float SETPOINT = 1.7;
 
 bool ERROR = false;
 
-MOTOR M1 = MOTOR(motor1_PWM, motor1_dir, motor1_encoderA, motor1_encoderB);
-MOTOR M2 = MOTOR(motor2_PWM, motor2_dir, motor2_encoder_A, motor2_encoder_B);
+ROBOT robot = ROBOT();
+
+int dir = 1;
 
 // Converts from encoder steps to revolutions per second
 float rps_conversion(long encoder_steps, long steps_per_rev, long dt) {
@@ -37,40 +37,42 @@ void setup(){
   // put your setup code here, to run once:
   Serial.begin(9600);
 
-  M1.set_pid_parameters(15, 0.15, 0.0);
+  robot.setup_robot_pinModes();
+  robot.set_stop();
 
-  M2.setup_motor_pinModes();
-  M2.set_pid_parameters(15, 0.15, 0.0);
-  M2.set_invert(true);
+  robot.set_linear_drive(300, 0.25);
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
   if ((clock - prev_time) >= SAMPLE_RATE_MS) {
-    if (M1.ERROR && (clock % 1000 < 500)) {
-      digitalWrite(LED_PIN, LOW);
-    }
-    else {
-      digitalWrite(LED_PIN, HIGH);
-    }
-    M1.ERROR = false;
+    digitalWrite(LED_PIN, HIGH);
 
-    long dt = (clock - prev_time);
+    // long dt = (clock - prev_time);
 
     prev_time = clock;
 
-    M1.set_velocity(SETPOINT, dt);
-    M2.set_velocity(SETPOINT, dt);
+    robot.update_robot();
 
-    Serial.print(SETPOINT);
-    Serial.print(",");
-    Serial.print(M1.rps);
-    Serial.print(",");
-    Serial.print(M2.rps);
-    Serial.print(",");
-    Serial.print(abs(M1.get_abs_encoder_pos()) - abs(M2.get_abs_encoder_pos()));
-    Serial.print(",");
+    if (robot.get_state() == STOP) {
+      robot.set_linear_drive(200 * dir, 0.2);
+      dir = -dir;
+    }
+
+    Serial.print(robot.get_distanceL_mm() / 10);
+    Serial.print(",\t");
+    Serial.print(robot.get_distanceR_mm() / 10);
+    Serial.print(",\t");
+    Serial.print((robot.get_distanceR_mm() - robot.get_distanceL_mm()));
+    Serial.print(",\t");
+    Serial.print(robot.get_state());
+    Serial.print(",\t");
+    Serial.print(robot.get_target_speed_ms());
+    Serial.print(",\t");
+    Serial.print(robot.get_target_speed_rps());
     Serial.println();
+
+
   }
 
   if (Serial.available()) {

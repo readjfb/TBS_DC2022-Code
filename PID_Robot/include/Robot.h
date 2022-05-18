@@ -1,35 +1,82 @@
 #include <Arduino.h>
 #include <MotorClass.h>
 
-class Robot {
+// DEFINE ROBOT PARAMETERS
+#define WHEEL_DIAMETER_MM 40
+#define WHEEL_DISTANCE_MM 110
+
+#define STOP 0
+#define STRAIGHT 1
+#define TURN 2
+
+struct PID_DATA
+{
+    float kp;
+    float ki;
+    float kd;
+    float error_sum;
+    float last_error;
+};
+
+class ROBOT {
     public:
         MOTOR* motorL = new MOTOR();
         MOTOR* motorR = new MOTOR();
 
     private:
-        float wheel_diameter_mm = 65;
-        float wheel_circumference_mm = (wheel_diameter_mm * 3.14159);
+        elapsedMillis clock;
+
+        u_int64_t prev_time = 0;
+
+        float wheel_diameter_mm = WHEEL_DIAMETER_MM;
+        float wheel_circumference_mm = (WHEEL_DIAMETER_MM * 3.14159);
 
         float heading_angle = 0;
+        float target_heading_angle = 0;
 
+        float target_distance_mm = 0;
+        float move_start_distanceL_mm = 0;
+        float move_start_distanceR_mm = 0;
+        elapsedMillis move_time = 0;
+
+        int possible_done_time = 0;
+
+        float max_velocity_rps = 0;
+
+        float target_robot_speed_rps = 0;
         float motorR_target_rps = 0;
         float motorL_target_rps = 0;
 
-        float rotational_kp = 0;
-        float rotational_ki = 0;
-        float rotational_kd = 0;
+        u_int8_t mode = STOP;
 
-        float linear_kp = 0;
-        float linear_ki = 0;
-        float linear_kd = 0;
-        float linear_delta = 0;
+        PID_DATA linear_pid = PID_DATA{0.004, 0.0012, 0.09};
 
     // Methods
     public:
-        Robot();
+        ROBOT();
 
-        float get_heading_deg();
-        void set_rotational_pid_parameters(float kp, float ki, float kd);
+        void setup_robot_pinModes();
+        void set_stop();
+        void set_linear_drive(float distance, float max_velocity);
+        void set_rotational_drive(float heading);
 
+        void update_robot();
 
+        float get_distanceL_mm();
+        float get_distanceR_mm();
+        int get_state();
+        float get_target_speed_rps();
+        float get_target_speed_ms();
+
+    private:
+        float get_total_distanceL_mm();
+        float get_total_distanceR_mm();
+
+        void update_motors(float dt);
+
+        void update_rotational_drive(float dt);
+        void update_linear_drive(float dt);
+        void update_stop(float dt);
+
+        float linear_velocity_pid(float setpoint, float current, float dt);
 };

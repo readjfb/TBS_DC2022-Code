@@ -36,6 +36,8 @@ class MOTOR {
 
         float get_abs_encoder_pos();
 
+        bool get_invert();
+
     private:
         void send_pwm();
         int pid_control(float dt, float setpoint, float pos);
