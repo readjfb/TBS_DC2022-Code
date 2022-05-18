@@ -5,11 +5,11 @@
 
 ROBOT::ROBOT()
 {
-    this->motorL = new MOTOR(motor1_PWM, motor1_dir, motor1_encoderA, motor1_encoderB);
-    this->motorR = new MOTOR(motor2_PWM, motor2_dir, motor2_encoder_A, motor2_encoder_B);
+    this->motorL = new MOTOR(motorL_PWM, motorL_dir, motorL_encoderA, motorL_encoderB);
+    this->motorR = new MOTOR(motorR_PWM, motorR_dir, motorR_encoder_A, motorR_encoder_B);
 
-    this->motorL->set_invert(true);
-    this->motorR->set_invert(false);
+    this->motorL->set_invert(false);
+    this->motorR->set_invert(true);
 
     this->motorL->set_pid_parameters(15, 0.15, 0.0);
     this->motorR->set_pid_parameters(15, 0.15, 0.0);
@@ -140,8 +140,6 @@ void ROBOT::update_rotational_drive(float dt)
     // TBD
     return;
 }
-
-
 
 
 float ROBOT::get_total_distanceL_mm()
