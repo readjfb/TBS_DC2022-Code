@@ -31,6 +31,9 @@ class ROBOT {
         float wheel_diameter_mm = WHEEL_DIAMETER_MM;
         float wheel_circumference_mm = (WHEEL_DIAMETER_MM * 3.14159);
 
+        float max_accel_rpss = 2;
+        float prev_rps;
+
         float heading_angle = 0;
         float target_heading_angle = 0;
 
@@ -49,7 +52,7 @@ class ROBOT {
 
         u_int8_t mode = STOP;
 
-        PID_DATA linear_pid = PID_DATA{0.004, 0.0012, 0.09};
+        PID_DATA linear_pid = PID_DATA{0.009, 0.0012, 0.085};
 
     // Methods
     public:

@@ -39,7 +39,7 @@ void setup(){
 
   robot.setup_robot_pinModes();
   pinMode(LED_PIN, OUTPUT);
-  pinMode(buttonPin, INPUT);
+  pinMode(buttonPin, INPUT_PULLUP);
 
   robot.set_stop();
 
@@ -69,8 +69,8 @@ void loop() {
     Serial.print(robot.get_target_speed_rps());
     Serial.println();
 
-    if (digitalRead(buttonPin) == HIGH) {
-      robot.set_linear_drive(48.7, 1);
+    if (digitalRead(buttonPin) == LOW) {
+      robot.set_linear_drive(100, 1);
     }
 
   }

@@ -95,11 +95,26 @@ void ROBOT::update_linear_drive(float dt)
     target_speed = constrain(target_speed, -this->max_velocity_rps, this->max_velocity_rps);
     target_speed = constrain(target_speed, -MAX_MOTOR_RPS, MAX_MOTOR_RPS);
 
+    Serial.println(target_speed);
+
+    // Constrain the target_speed within the acceleration
+    if (abs(target_speed) > abs(this->prev_rps) + (this->max_accel_rpss * (dt / 1000))) {
+
+        if (target_speed > 0) {
+            target_speed = this->prev_rps + (this->max_accel_rpss * (dt / 1000));
+        } else {
+            target_speed = this->prev_rps - (this->max_accel_rpss * (dt / 1000));
+        }
+    }
+
+    this->prev_rps = target_speed;
+
     this->target_robot_speed_rps = target_speed;
     this->motorL_target_rps = this->target_robot_speed_rps;
     this->motorR_target_rps = this->target_robot_speed_rps;
 
     // STILL VERY MUCH NEED TO DO HEADING ADJUSTMENT
+
 
     // Logic to detect if move is done
     if ((abs(adjusted_distance - this->target_distance_mm) < 1) && (abs(this->target_robot_speed_rps) < 0.15))
