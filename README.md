@@ -10,7 +10,11 @@ Robot dispenses tokens continuously while moving
 Due to time constraints, we were not able to execute the robot as completely as we would have liked, but completed the task to a satisfactory level
 
 ## Demo
-https://user-images.githubusercontent.com/15671813/172027557-82381823-de91-45f6-ae60-d1add6bdcfb3.mov  
+
+
+https://user-images.githubusercontent.com/15671813/172027598-4a8e7318-7596-4adb-a696-1f8902d849cd.mov
+
+
 *\*note - Tokens were not loaded on recorded run
 
 ## Features
