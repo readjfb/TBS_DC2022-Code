@@ -2,6 +2,9 @@
 #include <PIN_MAP.cpp>
 #include <PID_MotorControl.h>
 #include <Robot.h>
+#include <Bounce.h>
+
+#define FT_TO_CM 30.48
 
 elapsedMillis clock;
 
@@ -14,6 +17,8 @@ float SETPOINT = 1.7;
 bool ERROR = false;
 
 ROBOT robot = ROBOT();
+
+Bounce button = Bounce(buttonPin, 10);
 
 int dir = 1;
 
@@ -39,22 +44,24 @@ void setup(){
 
   robot.setup_robot_pinModes();
   pinMode(LED_PIN, OUTPUT);
+
   pinMode(buttonPin, INPUT_PULLUP);
 
   robot.set_stop();
 
+  // robot.set_linear_drive(45.72, 0.5);
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
+  robot.update_robot();
+
   if ((clock - prev_time) >= SAMPLE_RATE_MS) {
     digitalWrite(LED_PIN, HIGH);
 
-    // long dt = (clock - prev_time);
-
     prev_time = clock;
 
-    robot.update_robot();
+    robot.update_sensors();
 
     Serial.print(robot.get_distanceL_mm() / 10);
     Serial.print(",\t");
@@ -67,12 +74,15 @@ void loop() {
     Serial.print(robot.get_target_speed_ms());
     Serial.print(",\t");
     Serial.print(robot.get_target_speed_rps());
+    Serial.print(",\t");
+    Serial.print(robot.is_moving());
     Serial.println();
 
-    if (digitalRead(buttonPin) == LOW) {
-      robot.set_linear_drive(100, 1);
-    }
+    button.update();
 
+    if (button.risingEdge()) {
+      robot.go();
+    }
   }
 
   if (Serial.available()) {
