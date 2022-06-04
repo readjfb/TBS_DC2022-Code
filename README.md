@@ -1,7 +1,7 @@
 # TBS_DC2022-Code
-Teensy 4.0 code for Team TBS (McCormick Design Competition 2022)
-Team members: Jackson Bremen, Garrett Short, Evan Waite
-Development using PlatformIO in VSCode
+Team TBS (McCormick Design Competition 2022)  
+&rarr; Jackson Bremen, Garrett Short, Evan Waite  
+Development using PlatformIO in VSCode || Code to be executed on Teensy 4.0
 
 ## Current Status
 Robot is working with dead reckoning via encoders
