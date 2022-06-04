@@ -4,7 +4,7 @@ Team TBS (McCormick Design Competition 2022)
 Development using PlatformIO in VSCode || Code to be executed on Teensy 4.0
 
 ## Current Status
-Robot is working with dead reckoning via encoders
+Robot is working with dead reckoning via encoders.
 We were hoping to use gyroscopes/ IMU, but didn't recieve the parts
 Robot dispenses tokens continuously while moving 
 Due to time constraints, we were not able to execute the robot as completely as we would have liked, but completed the task to a satisfactory level
@@ -31,10 +31,7 @@ Code to use MPU6050 was written but not integrated, as sensor precision was lack
 
 ## Next steps
 - [ ] Add sensors, such as laser rangefinders, IMU/Gyro/Magnetometer Sensor Suite, or bump sensors
-- [ ] Refine hadware
+- [ ] Refine hadware (3D print battery mounts, PCB mounts)
+- [ ] Record video where robot is dispensing tokens
 - [ ] Create built-in model of the course; allow robot to truly autonomously solve the course using TSP, Djikstra's, A*, or other
 - [ ] Add a stop/ reset button to electronics stack 
-
-
-
-
