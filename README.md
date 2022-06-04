@@ -15,7 +15,7 @@ Due to time constraints, we were not able to execute the robot as completely as 
 https://user-images.githubusercontent.com/15671813/172027598-4a8e7318-7596-4adb-a696-1f8902d849cd.mov
 
 
-*\*note - Tokens were not loaded on recorded run
+*note - Tokens were not loaded on recorded run
 
 ## Features
 Motor speeds are controlled via PID loop, allowing programmer to specify a speed in m/s, and the wheels will maintain speed to a high degree of fidelity
