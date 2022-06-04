@@ -11,7 +11,11 @@ Due to time constraints, we were not able to execute the robot as completely as 
 
 ## Features
 Motor speeds are controlled via PID loop, allowing programmer to specify a speed in m/s, and the wheels will maintain speed to a high degree of fidelity
-Robot uses PID for driving, both linearly and for turning; programmer specifies a distance to drive or an angle to turn at, and the robot executes the turn pretty well
+Robot uses PID for driving, both linearly and for turning; programmer specifies a distance to drive or an angle to turn at, and the robot executes the turn pretty well  
+Code is completely nonblocking and runs fast
+
+## Basic Structure
+Code is written as object oriented C++. Motors, Dispenser are base classes. Robot holds instances of them as needed, and uses their functions (see [MotorClass.h](https://github.com/readjfb/TBS_DC2022-Code/blob/103447f442ba9b6c0e5b22dbf0b4158de8f8f7a0/PID_Robot/include/MotorClass.h)). Within Robot.cpp, the large switch statement in update_robot acts as a basic state machine, allowing us to step through the steps of the robot
 
 ## Unused features
 Code to use MPU6050 was written but not integrated, as sensor precision was lacking
@@ -20,4 +24,5 @@ Code to use MPU6050 was written but not integrated, as sensor precision was lack
 - [ ] Add sensors, such as laser rangefinders, IMU/Gyro/Magnetometer Sensor Suite, or bump sensors
 - [ ] Refine hadware
 - [ ] Create built-in model of the course; allow robot to truly autonomously solve the course using TSP, Djikstra's, A*, or other
+- [ ] Add a stop/ reset button to electronics stack 
 
