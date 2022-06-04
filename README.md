@@ -14,7 +14,7 @@ Motor speeds are controlled via PID loop, allowing programmer to specify a speed
 Robot uses PID for driving, both linearly and for turning; programmer specifies a distance to drive or an angle to turn at, and the robot executes the turn pretty well
 
 ## Next steps
-[ ] Add sensors, such as laser rangefinders, IMU/Gyro/Magnetometer Sensor Suite, or bump sensors
-[ ] Refine hadware
-[ ] Create built-in model of the course; allow robot to truly autonomously solve the course using TSP, Djikstra's, A*, or other
+- [ ] Add sensors, such as laser rangefinders, IMU/Gyro/Magnetometer Sensor Suite, or bump sensors
+- [ ] Refine hadware
+- [ ] Create built-in model of the course; allow robot to truly autonomously solve the course using TSP, Djikstra's, A*, or other
 
