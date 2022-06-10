@@ -18,7 +18,7 @@ https://user-images.githubusercontent.com/15671813/172027598-4a8e7318-7596-4adb-
 **note - Tokens were not loaded on recorded run*
 
 ## Features
-Motor speeds are controlled via PID loop, allowing programmer to specify a speed in m/s, and the wheels will maintain speed to a high degree of fidelity
+Motor speeds are controlled via PID loop, allowing programmer to specify a speed in m/s, and the wheels will maintain speed to a high degree of fidelity  
 Robot uses PID for driving, both linearly and for turning; programmer specifies a distance to drive or an angle to turn at, and the robot executes the turn pretty well  
 Code is completely nonblocking and runs fast  
 Robot continuously dispenses tokens while robot moves
